@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SHALIMAR Jewellery | Luxury Jewellery</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Georgia", serif;
+            background: #faf8f4;
+            color: #29231f;
+        }
+
+        /* Header */
+        header {
+            background: #111;
+            color: #d4af37;
+            padding: 20px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 30px;
+            letter-spacing: 5px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: #d4af37;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 500px;
+            background:
+                linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+                url("https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1600&q=80")
+                center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 60px;
+            letter-spacing: 8px;
+            color: #d4af37;
+        }
+
+        .hero p {
+            margin: 20px 0;
+            font-size: 20px;
+        }
+
+        .hero button {
+            padding: 14px 35px;
+            border: 1px solid #d4af37;
+            background: #d4af37;
+            color: #111;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Catalog */
+        .catalog {
+            padding: 60px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-title h2 {
+            font-size: 38px;
+            color: #222;
+        }
+
+        .section-title p {
+            color: #777;
+            margin-top: 10px;
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .filters button {
+            padding: 10px 20px;
+            border: 1px solid #d4af37;
+            background: white;
+            cursor: pointer;
+        }
+
+        .filters button:hover,
+        .filters button.active {
+            background: #d4af37;
+            color: white;
+        }
+
+        .search-box {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .search-box input {
+            width: 350px;
+            padding: 14px;
+            border: 1px solid #ccc;
+            outline: none;
+            font-size: 15px;
+        }
+
+        /* Products */
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .product {
+            background: white;
+            border: 1px solid #eee;
+            transition: .3s;
+            overflow: hidden;
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,.12);
+        }
+
+        .product img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .product-info h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .category {
+            color: #999;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+        }
+
+        .price {
+            color: #b28b1c;
+            font-weight: bold;
+            font-size: 18px;
+            margin: 12px 0;
+        }
+
+        .product button {
+            width: 100%;
+            padding: 11px;
+            border: none;
+            background: #111;
+            color: white;
+            cursor: pointer;
+        }
+
+        .product button:hover {
+            background: #d4af37;
+        }
+
+        /* About */
+        .about {
+            background: #111;
+            color: white;
+            padding: 70px 10%;
+            text-align: center;
+        }
+
+        .about h2 {
+            color: #d4af37;
+            font-size: 35px;
+            margin-bottom: 20px;
+        }
+
+        .about p {
+            max-width: 800px;
+            margin: auto;
+            line-height: 1.8;
+            color: #ddd;
+        }
+
+        /* Footer */
+        footer {
+            background: #080808;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        footer span {
+            color: #d4af37;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.75);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 800px;
+            width: 100%;
+            padding: 30px;
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .modal-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .modal-info h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .modal-info p {
+            line-height: 1.7;
+            color: #666;
+        }
+
+        .modal-price {
+            font-size: 25px;
+            color: #b28b1c;
+            margin: 20px 0;
+        }
+
+        .close {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        /* Cart */
+        .cart {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background: #d4af37;
+            color: #111;
+            padding: 15px 22px;
+            border-radius: 30px;
+            cursor: pointer;
+            z-index: 1500;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+        }
+
+        @media(max-width: 700px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 0 7px;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .modal-content {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content img {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">SHALIMAR</div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#catalog">Catalog</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<section class="hero" id="home">
+    <div>
+        <h1>SHALIMAR</h1>
+        <p>Timeless Elegance. Exceptional Jewellery.</p>
+        <button onclick="document.getElementById('catalog').scrollIntoView()">
+            EXPLORE COLLECTION
+        </button>
+    </div>
+</section>
+
+<section class="catalog" id="catalog">
+
+    <div class="section-title">
+        <h2>Our Collection</h2>
+        <p>Discover our exclusive jewellery collection</p>
+    </div>
+
+    <div class="filters">
+        <button class="active" onclick="filterProducts('All', this)">All</button>
+        <button onclick="filterProducts('Rings', this)">Rings</button>
+        <button onclick="filterProducts('Necklaces', this)">Necklaces</button>
+        <button onclick="filterProducts('Earrings', this)">Earrings</button>
+        <button onclick="filterProducts('Bracelets', this)">Bracelets</button>
+    </div>
+
+    <div class="search-box">
+        <input
+            type="text"
+            id="search"
+            placeholder="Search jewellery..."
+            onkeyup="searchProducts()"
+        >
+    </div>
+
+    <div class="products" id="products"></div>
+
+</section>
+
+<section class="about" id="about">
+    <h2>About SHALIMAR Jewellery</h2>
+
+    <p>
+        SHALIMAR Jewellery represents timeless beauty, elegance and craftsmanship.
+        Our collection is designed for those who appreciate sophisticated
+        jewellery created to celebrate life's most memorable moments.
+    </p>
+</section>
+
+<footer id="contact">
+    <p>
+        © 2026 <span>SHALIMAR Jewellery</span> |
+        All Rights Reserved
+    </p>
+</footer>
+
+<div class="cart" onclick="showCart()">
+    🛒 Cart: <span id="cartCount">0</span>
+</div>
+
+<!-- Product Modal -->
+
+<div class="modal" id="productModal">
+
+    <div class="modal-content">
+
+        <span class="close" onclick="closeModal()">×</span>
+
+        <img id="modalImage" src="" alt="Jewellery">
+
+        <div class="modal-info">
+            <h2 id="modalName"></h2>
+
+            <p id="modalCategory"></p>
+
+            <p id="modalDescription"></p>
+
+            <div class="modal-price" id="modalPrice"></div>
+
+            <button onclick="addToCartFromModal()">
+                Add to Cart
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+const products = [
+
+    {
+        id: 1,
+        name: "Royal Diamond Ring",
+        category: "Rings",
+        price: 8500,
+        image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=800&q=80",
+        description: "Elegant diamond ring designed with a timeless luxury finish."
+    },
+
+    {
+        id: 2,
+        name: "Golden Elegance Necklace",
+        category: "Necklaces",
+        price: 6200,
+        image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80",
+        description: "A sophisticated necklace crafted for elegant occasions."
+    },
+
+    {
+        id: 3,
+        name: "Diamond Drop Earrings",
+        category: "Earrings",
+        price: 4800,
+        image: "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&w=800&q=80",
+        description: "Beautiful diamond drop earrings with a refined luxury design."
+    },
+
+    {
+        id: 4,
+        name: "Classic Gold Bracelet",
+        category: "Bracelets",
+        price: 3900,
+        image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=800&q=80",
+        description: "Classic gold bracelet suitable for everyday elegance."
+    },
+
+    {
+        id: 5,
+        name: "Princess Diamond Ring",
+        category: "Rings",
+        price: 12500,
+        image: "https://images.unsplash.com/photo-1627293509201-cd8c3d6c3c13?auto=format&fit=crop&w=800&q=80",
+        description: "A statement diamond ring inspired by royal elegance."
+    },
+
+    {
+        id: 6,
+        name: "Luxury Pearl Necklace",
+        category: "Necklaces",
+        price: 7200,
+        image: "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=800&q=80",
+        description: "Elegant pearl necklace designed for sophisticated occasions."
+    },
+
+    {
+        id: 7,
+        name: "Golden Hoop Earrings",
+        category: "Earrings",
+        price: 2500,
+        image: "https://images.unsplash.com/photo-1635767798638-3e25273a8236?auto=format&fit=crop&w=800&q=80",
+        description: "Modern golden hoop earrings with a timeless appearance."
+    },
+
+    {
+        id: 8,
+        name: "Diamond Tennis Bracelet",
+        category: "Bracelets",
+        price: 9800,
+        image: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=800&q=80",
+        description: "Luxury tennis bracelet featuring a brilliant diamond design."
+    }
+
+];
+
+let selectedProduct = null;
+let cart = [];
+
+function displayProducts(list = products) {
+
+    const container = document.getElementById("products");
+
+    container.innerHTML = "";
+
+    if (list.length === 0) {
+        container.innerHTML =
+            "<p style='text-align:center;grid-column:1/-1;'>No jewellery found.</p>";
+        return;
+    }
+
+    list.forEach(product => {
+
+        container.innerHTML += `
+
+            <div class="product">
+
+                <img
+                    src="${product.image}"
+                    alt="${product.name}"
+                    onclick="openProduct(${product.id})"
+                    style="cursor:pointer"
+                >
+
+                <div class="product-info">
+
+                    <h3>${product.name}</h3>
+
+                    <div class="category">
+                        ${product.category}
+                    </div>
+
+                    <div class="price">
+                        SAR ${product.price.toLocaleString()}
+                    </div>
+
+                    <button onclick="openProduct(${product.id})">
+                        View Details
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+}
+
+function filterProducts(category, button) {
+
+    document.querySelectorAll(".filters button")
+        .forEach(btn => btn.classList.remove("active"));
+
+    button.classList.add("active");
+
+    if (category === "All") {
+        displayProducts(products);
+    } else {
+        displayProducts(
+            products.filter(product =>
+                product.category === category
+            )
+        );
+    }
+}
+
+function searchProducts() {
+
+    const keyword =
+        document.getElementById("search").value.toLowerCase();
+
+    const results = products.filter(product =>
+        product.name.toLowerCase().includes(keyword) ||
+        product.category.toLowerCase().includes(keyword)
+    );
+
+    displayProducts(results);
+}
+
+function openProduct(id) {
+
+    selectedProduct =
+        products.find(product => product.id === id);
+
+    document.getElementById("modalImage").src =
+        selectedProduct.image;
+
+    document.getElementById("modalName").textContent =
+        selectedProduct.name;
+
+    document.getElementById("modalCategory").textContent =
+        selectedProduct.category;
+
+    document.getElementById("modalDescription").textContent =
+        selectedProduct.description;
+
+    document.getElementById("modalPrice").textContent =
+        "SAR " + selectedProduct.price.toLocaleString();
+
+    document.getElementById("productModal").style.display = "flex";
+}
+
+function closeModal() {
+    document.getElementById("productModal").style.display = "none";
+}
+
+function addToCartFromModal() {
+
+    if (!selectedProduct) return;
+
+    cart.push(selectedProduct);
+
+    updateCart();
+
+    closeModal();
+
+    alert(selectedProduct.name + " added to cart.");
+}
+
+function updateCart() {
+
+    document.getElementById("cartCount").textContent =
+        cart.length;
+}
+
+function showCart() {
+
+    if (cart.length === 0) {
+        alert("Your cart is empty.");
+        return;
+    }
+
+    let total = cart.reduce(
+        (sum, product) => sum + product.price,
+        0
+    );
+
+    let items = cart
+        .map(product => product.name)
+        .join("\n");
+
+    alert(
+        "SHALIMAR Jewellery Cart\n\n" +
+        items +
+        "\n\nTotal: SAR " +
+        total.toLocaleString()
+    );
+}
+
+window.onclick = function(event) {
+
+    const modal =
+        document.getElementById("productModal");
+
+    if (event.target === modal) {
+        closeModal();
+    }
+
+};
+
+displayProducts();
+
+</script>
+
+</body>
+</html>
